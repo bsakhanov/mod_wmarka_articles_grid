@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="package" method="upgrade">
+    <name>PKG_WMARKA_ARTICLES_GRID</name>
+    <packagename>wmarka_articles_grid</packagename>
+    <author>Beibit Sakhanov</author>
+    <creationDate>2026-10</creationDate>
+    <copyright>(C) 2026 Beibit Sakhanov</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorUrl>https://webmarka.kz</authorUrl>
+    <version>1.0.0</version>
+    <description>PKG_WMARKA_ARTICLES_GRID_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
+
+    <!-- packages/lib_juimage.zip travels with the package but is installed by script.php only when the site has no JUImage -->
+    <files folder="packages">
+        <file type="module" id="mod_wmarka_articles_grid" client="site">mod_wmarka_articles_grid.zip</file>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB/pkg_wmarka_articles_grid.sys.ini</language>
+        <language tag="ru-RU">ru-RU/pkg_wmarka_articles_grid.sys.ini</language>
+    </languages>
+</extension>

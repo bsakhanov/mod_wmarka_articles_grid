@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+    <name>MOD_WMARKA_ARTICLES_GRID</name>
+    <author>Beibit Sakhanov</author>
+    <creationDate>2026-10</creationDate>
+    <copyright>(C) 2026 Beibit Sakhanov</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorUrl>https://webmarka.kz</authorUrl>
+    <version>1.0.0</version>
+    <description>MOD_WMARKA_ARTICLES_GRID_DESC</description>
+    <namespace path="src">Webmarka\Module\ArticlesGrid</namespace>
+
+    <files>
+        <folder module="mod_wmarka_articles_grid">services</folder>
+        <folder>src</folder>
+        <folder>tmpl</folder>
+    </files>
+
+    <languages>
+        <language tag="ru-RU">language/ru-RU/mod_wmarka_articles_grid.ini</language>
+        <language tag="ru-RU">language/ru-RU/mod_wmarka_articles_grid.sys.ini</language>
+        <language tag="en-GB">language/en-GB/mod_wmarka_articles_grid.ini</language>
+        <language tag="en-GB">language/en-GB/mod_wmarka_articles_grid.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_BASIC_LABEL">
+                <field name="mode" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MODE_LABEL" default="normal">
+                    <option value="normal">MOD_WMARKA_ARTICLES_GRID_OPTION_NORMAL_VALUE</option>
+                    <option value="dynamic">MOD_WMARKA_ARTICLES_GRID_OPTION_DYNAMIC_VALUE</option>
+                </field>
+                <field name="show_on_article_page" type="radio" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SHOWONARTICLEPAGE_LABEL" default="1" layout="joomla.form.field.radio.switcher" showon="mode:dynamic">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="catid" type="category" extension="com_content" multiple="true" label="JCATEGORY" class="form-select multipleCategories" showon="mode:normal" />
+                <field name="show_child_category_articles" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_CHILDCAT_LABEL" default="0" filter="integer">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="levels" type="number" label="MOD_WMARKA_ARTICLES_GRID_FIELD_CATDEPTH_LABEL" default="1" filter="integer" showon="show_child_category_articles:1" />
+                
+                <field name="count" type="number" default="6" label="MOD_WMARKA_ARTICLES_GRID_FIELD_COUNT_LABEL" class="form-control" />
+                <field name="show_introtext" type="radio" default="1" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SHOWINTROTEXT_LABEL" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="introtext_limit" type="number" default="150" min="0" filter="integer" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTROLIMIT_LABEL" class="form-control" showon="show_introtext:1" />
+                <field name="introtext_truncate" type="list" default="chars" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_TRUNCATE_LABEL" class="form-select" showon="show_introtext:1">
+                    <option value="chars">MOD_WMARKA_ARTICLES_GRID_OPTION_TRUNCATE_CHARS</option>
+                    <option value="words">MOD_WMARKA_ARTICLES_GRID_OPTION_TRUNCATE_WORDS</option>
+                </field>
+                <field name="introtext_format" type="list" default="plain" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_FORMAT_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_FORMAT_DESC" class="form-select" showon="show_introtext:1">
+                    <option value="plain">MOD_WMARKA_ARTICLES_GRID_OPTION_FORMAT_PLAIN</option>
+                    <option value="html">MOD_WMARKA_ARTICLES_GRID_OPTION_FORMAT_HTML</option>
+                </field>
+                <field name="articles_layout" type="list" default="items" label="MOD_WMARKA_ARTICLES_GRID_FIELD_LAYOUT_LABEL" class="form-select">
+                    <option value="items">MOD_WMARKA_ARTICLES_GRID_OPTION_LAYOUT_ITEMS</option>
+                    <option value="titles">MOD_WMARKA_ARTICLES_GRID_OPTION_LAYOUT_TITLES</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="filtering" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_FILTERING_LABEL">
+                <field name="show_featured" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FEATURED_LABEL" default="show">
+                    <option value="show">JSHOW</option><option value="hide">JHIDE</option><option value="only">MOD_WMARKA_ARTICLES_GRID_OPTION_ONLY</option>
+                </field>
+                <field name="filter_tag" type="tag" label="JTAG" mode="nested" multiple="true" filter="intarray" class="form-select multipleTags" />
+                
+                <field name="author_filtering_type" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_AUTHORFILTER_LABEL" default="1" filter="integer">
+                    <option value="0">MOD_WMARKA_ARTICLES_GRID_OPTION_EXCLUDE</option>
+                    <option value="1">MOD_WMARKA_ARTICLES_GRID_OPTION_INCLUDE</option>
+                    <option value="2">MOD_WMARKA_ARTICLES_GRID_OPTION_CURRENTUSER</option>
+                </field>
+                <field name="created_by" type="author" label="MOD_WMARKA_ARTICLES_GRID_FIELD_AUTHOR_LABEL" multiple="true" class="form-select multipleAuthors" showon="author_filtering_type!:2" />
+                
+                <field name="date_filtering" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_DATEFILTER_LABEL" default="off">
+                    <option value="off">MOD_WMARKA_ARTICLES_GRID_OPTION_OFF</option>
+                    <option value="range">MOD_WMARKA_ARTICLES_GRID_OPTION_DATERANGE</option>
+                    <option value="relative">MOD_WMARKA_ARTICLES_GRID_OPTION_RELATIVEDATE</option>
+                </field>
+                <field name="date_field" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_DATEFIELD_LABEL" default="a.created" showon="date_filtering!:off">
+                    <option value="a.created">MOD_WMARKA_ARTICLES_GRID_OPTION_CREATED</option>
+                    <option value="a.modified">MOD_WMARKA_ARTICLES_GRID_OPTION_MODIFIED</option>
+                    <option value="a.publish_up">MOD_WMARKA_ARTICLES_GRID_OPTION_PUBLISHED</option>
+                </field>
+                <field name="start_date_range" type="calendar" label="MOD_WMARKA_ARTICLES_GRID_FIELD_STARTDATE_LABEL" translateformat="true" showtime="true" filter="user_utc" showon="date_filtering:range" />
+                <field name="end_date_range" type="calendar" label="MOD_WMARKA_ARTICLES_GRID_FIELD_ENDDATE_LABEL" translateformat="true" showtime="true" filter="user_utc" showon="date_filtering:range" />
+                <field name="relative_date" type="number" label="MOD_WMARKA_ARTICLES_GRID_FIELD_RELATIVEDAYS_LABEL" default="30" filter="integer" showon="date_filtering:relative" />
+            </fieldset>
+
+            <fieldset name="ordering" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_ORDERING_LABEL">
+                <field name="article_ordering" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_ORDERING_LABEL" default="a.title">
+                    <option value="a.ordering">MOD_WMARKA_ARTICLES_GRID_OPTION_ORDERING</option>
+                    <option value="fp.ordering">MOD_WMARKA_ARTICLES_GRID_OPTION_ORDERING_FEAT</option>
+                    <option value="a.title">JGLOBAL_TITLE</option>
+                    <option value="a.id">ID</option>
+                    <option value="a.created">MOD_WMARKA_ARTICLES_GRID_OPTION_CREATED</option>
+                    <option value="modified">MOD_WMARKA_ARTICLES_GRID_OPTION_MODIFIED</option>
+                    <option value="publish_up">MOD_WMARKA_ARTICLES_GRID_OPTION_PUBLISHED</option>
+                    <option value="random">MOD_WMARKA_ARTICLES_GRID_OPTION_RANDOM</option>
+                    <option value="a.hits">MOD_WMARKA_ARTICLES_GRID_OPTION_HITS</option>
+                </field>
+                <field name="article_ordering_direction" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_ORDERDIR_LABEL" default="ASC">
+                    <option value="DESC">MOD_WMARKA_ARTICLES_GRID_OPTION_DESC</option>
+                    <option value="ASC">MOD_WMARKA_ARTICLES_GRID_OPTION_ASC</option>
+                </field>
+                
+                <field type="spacer" name="sp_grouping" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_GROUPING_LABEL" hr="true" />
+                <field name="article_grouping" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_GROUPING_LABEL" default="none">
+                    <option value="none">JNONE</option>
+                    <option value="year">MOD_WMARKA_ARTICLES_GRID_OPTION_YEAR</option>
+                    <option value="month_year">MOD_WMARKA_ARTICLES_GRID_OPTION_MONTH_YEAR</option>
+                    <option value="author">JAUTHOR</option>
+                    <option value="category_title">JCATEGORY</option>
+                    <option value="tags">JTAG</option>
+                </field>
+                <field name="article_grouping_direction" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_GROUPDIR_LABEL" default="ksort" showon="article_grouping!:none">
+                    <option value="krsort">MOD_WMARKA_ARTICLES_GRID_OPTION_DESC</option>
+                    <option value="ksort">MOD_WMARKA_ARTICLES_GRID_OPTION_ASC</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="frontend_filter_fs" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_FRONTEND_FILTER_LABEL">
+                <field name="frontend_filter" type="radio" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_DESC" default="0" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+                <field name="frontend_filter_by" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_BY_LABEL" default="category" showon="frontend_filter:1">
+                    <option value="category">JCATEGORY</option>
+                    <option value="tag">JTAG</option>
+                    <option value="author">JAUTHOR</option>
+                    <option value="year">MOD_WMARKA_ARTICLES_GRID_OPTION_YEAR</option>
+                    <option value="month">MOD_WMARKA_ARTICLES_GRID_OPTION_MONTH_YEAR</option>
+                </field>
+                <field name="frontend_filter_style" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_STYLE_LABEL" default="uk-subnav uk-subnav-pill" showon="frontend_filter:1">
+                    <option value="uk-subnav uk-subnav-divider">MOD_WMARKA_ARTICLES_GRID_OPTION_FSTYLE_DIVIDER</option>
+                    <option value="uk-subnav uk-subnav-pill">MOD_WMARKA_ARTICLES_GRID_OPTION_FSTYLE_PILL</option>
+                    <option value="uk-tab">MOD_WMARKA_ARTICLES_GRID_OPTION_FSTYLE_TAB</option>
+                    <option value="uk-button-group">MOD_WMARKA_ARTICLES_GRID_OPTION_FSTYLE_BUTTONS</option>
+                </field>
+                <field name="frontend_filter_align" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_ALIGN_LABEL" default="uk-flex-center" showon="frontend_filter:1">
+                    <option value="uk-flex-left">MOD_WMARKA_ARTICLES_GRID_OPTION_ALIGN_LEFT</option>
+                    <option value="uk-flex-center">MOD_WMARKA_ARTICLES_GRID_OPTION_ALIGN_CENTER</option>
+                    <option value="uk-flex-right">MOD_WMARKA_ARTICLES_GRID_OPTION_ALIGN_RIGHT</option>
+                </field>
+                <field name="frontend_filter_all" type="text" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_ALL_LABEL" default="" hint="MOD_WMARKA_ARTICLES_GRID_FILTER_ALL_DEFAULT" showon="frontend_filter:1" />
+                <field name="frontend_filter_anim" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FFILTER_ANIM_LABEL" default="fade" showon="frontend_filter:1">
+                    <option value="slide">MOD_WMARKA_ARTICLES_GRID_OPTION_ANIM_SLIDE</option>
+                    <option value="fade">MOD_WMARKA_ARTICLES_GRID_OPTION_ANIM_FADE</option>
+                    <option value="delayed-fade">MOD_WMARKA_ARTICLES_GRID_OPTION_ANIM_DELAYED_FADE</option>
+                    <option value="false">MOD_WMARKA_ARTICLES_GRID_OPTION_ANIM_NONE</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="uikit_design" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_UIKIT_LABEL">
+                <field type="spacer" name="sp_header" label="MOD_WMARKA_ARTICLES_GRID_SP_HEADER_LABEL" hr="true" />
+                <field name="custom_header" type="text" label="MOD_WMARKA_ARTICLES_GRID_FIELD_HEADER_TEXT_LABEL" class="form-control" />
+                <field name="header_link" type="url" label="MOD_WMARKA_ARTICLES_GRID_FIELD_HEADER_LINK_LABEL" class="form-control" />
+                <field name="header_tag" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_HEADER_TAG_LABEL" default="h2" class="form-select">
+                    <option value="h1">H1</option><option value="h2">H2</option><option value="h3">H3</option><option value="h4">H4</option><option value="h5">H5</option><option value="h6">H6</option><option value="div">DIV</option>
+                </field>
+                <field name="header_size" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SIZE_CLASS_LABEL" default="" class="form-select">
+                    <option value="">MOD_WMARKA_ARTICLES_GRID_OPTION_SIZE_NONE</option>
+                    <option value="uk-h1">uk-h1</option>
+                    <option value="uk-h2">uk-h2</option>
+                    <option value="uk-h3">uk-h3</option>
+                    <option value="uk-h4">uk-h4</option>
+                    <option value="uk-h5">uk-h5</option>
+                    <option value="uk-h6">uk-h6</option>
+                    <option value="uk-heading-small">uk-heading-small</option>
+                    <option value="uk-heading-medium">uk-heading-medium</option>
+                    <option value="uk-heading-large">uk-heading-large</option>
+                    <option value="uk-heading-xlarge">uk-heading-xlarge</option>
+                </field>
+                <field name="header_class" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_HEADER_CLASS_LABEL" default="uk-heading-line" class="form-select">
+                    <option value="">MOD_WMARKA_ARTICLES_GRID_OPTION_HEADCLASS_NONE</option>
+                    <option value="uk-heading-line">MOD_WMARKA_ARTICLES_GRID_OPTION_HEADCLASS_LINE</option>
+                    <option value="uk-heading-bullet">MOD_WMARKA_ARTICLES_GRID_OPTION_HEADCLASS_BULLET</option>
+                    <option value="uk-heading-divider">MOD_WMARKA_ARTICLES_GRID_OPTION_HEADCLASS_DIVIDER</option>
+                </field>
+                <field name="header_link_class" type="radio" default="1" label="MOD_WMARKA_ARTICLES_GRID_FIELD_HEADER_LINKCLASS_LABEL" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+
+                <field type="spacer" name="sp_layout" label="MOD_WMARKA_ARTICLES_GRID_SP_CARD_LAYOUT_LABEL" hr="true" />
+                <field name="card_media_pos" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MEDIA_POS_LABEL" default="top" class="form-select">
+                    <option value="top">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_TOP</option>
+                    <option value="bottom">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_BOTTOM</option>
+                    <option value="left">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_LEFT</option>
+                    <option value="right">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_RIGHT</option>
+                    <option value="zebra-v">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_ZEBRA_V</option>
+                    <option value="zebra-h">MOD_WMARKA_ARTICLES_GRID_OPTION_POS_ZEBRA_H</option>
+                </field>
+                <field name="card_structure" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_CARD_STRUCT_LABEL" default="body-only" class="form-select">
+                    <option value="body-only">MOD_WMARKA_ARTICLES_GRID_OPTION_STRUCT_BODY</option>
+                    <option value="header-body">MOD_WMARKA_ARTICLES_GRID_OPTION_STRUCT_HB</option>
+                    <option value="body-footer">MOD_WMARKA_ARTICLES_GRID_OPTION_STRUCT_BF</option>
+                    <option value="header-body-footer">MOD_WMARKA_ARTICLES_GRID_OPTION_STRUCT_HBF</option>
+                </field>
+
+                <field type="spacer" name="sp_typo" label="MOD_WMARKA_ARTICLES_GRID_SP_TYPO_LABEL" hr="true" />
+                <field name="item_heading_tag" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_ITEM_TAG_LABEL" default="h3" class="form-select">
+                    <option value="h1">H1</option><option value="h2">H2</option><option value="h3">H3</option><option value="h4">H4</option><option value="h5">H5</option><option value="h6">H6</option><option value="div">DIV</option>
+                </field>
+                <field name="item_heading_size" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SIZE_CLASS_LABEL" default="" class="form-select">
+                    <option value="">MOD_WMARKA_ARTICLES_GRID_OPTION_SIZE_NONE</option>
+                    <option value="uk-h1">uk-h1</option>
+                    <option value="uk-h2">uk-h2</option>
+                    <option value="uk-h3">uk-h3</option>
+                    <option value="uk-h4">uk-h4</option>
+                    <option value="uk-h5">uk-h5</option>
+                    <option value="uk-h6">uk-h6</option>
+                    <option value="uk-heading-small">uk-heading-small</option>
+                    <option value="uk-heading-medium">uk-heading-medium</option>
+                    <option value="uk-heading-large">uk-heading-large</option>
+                    <option value="uk-text-lead">uk-text-lead</option>
+                    <option value="uk-text-large">uk-text-large</option>
+                </field>
+                <field name="title_classes" type="text" label="MOD_WMARKA_ARTICLES_GRID_FIELD_TITLE_CLASS_LABEL" default="uk-card-title uk-link-heading" class="form-control" />
+                <field type="spacer" name="sp_intro" label="MOD_WMARKA_ARTICLES_GRID_SP_INTRO_LABEL" hr="true" />
+                <field name="intro_size" type="list" default="uk-text-small" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_SIZE_LABEL" class="form-select">
+                    <option value="">JDEFAULT</option>
+                    <option value="uk-text-meta">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_META</option>
+                    <option value="uk-text-small">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_SMALL</option>
+                    <option value="uk-text-large">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_LARGE</option>
+                    <option value="uk-text-lead">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_LEAD</option>
+                </field>
+                <field name="intro_color" type="list" default="uk-text-muted" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_COLOR_LABEL" class="form-select">
+                    <option value="">JDEFAULT</option>
+                    <option value="uk-text-muted">MOD_WMARKA_ARTICLES_GRID_OPTION_COLOR_MUTED</option>
+                    <option value="uk-text-emphasis">MOD_WMARKA_ARTICLES_GRID_OPTION_COLOR_EMPHASIS</option>
+                    <option value="uk-text-primary">MOD_WMARKA_ARTICLES_GRID_OPTION_COLOR_PRIMARY</option>
+                    <option value="uk-text-secondary">MOD_WMARKA_ARTICLES_GRID_OPTION_COLOR_SECONDARY</option>
+                </field>
+                <field name="intro_style" type="list" default="" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_STYLE_LABEL" class="form-select">
+                    <option value="">MOD_WMARKA_ARTICLES_GRID_OPTION_STYLE_NORMAL</option>
+                    <option value="uk-text-italic">MOD_WMARKA_ARTICLES_GRID_OPTION_STYLE_ITALIC</option>
+                    <option value="uk-text-light">MOD_WMARKA_ARTICLES_GRID_OPTION_STYLE_LIGHT</option>
+                    <option value="uk-text-bold">MOD_WMARKA_ARTICLES_GRID_OPTION_STYLE_BOLD</option>
+                </field>
+                <field name="intro_align" type="list" default="" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_ALIGN_LABEL" class="form-select">
+                    <option value="">JDEFAULT</option>
+                    <option value="uk-text-left">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_LEFT</option>
+                    <option value="uk-text-center">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_CENTER</option>
+                    <option value="uk-text-right">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_RIGHT</option>
+                    <option value="uk-text-justify">MOD_WMARKA_ARTICLES_GRID_OPTION_TEXT_JUSTIFY</option>
+                </field>
+                <field name="intro_clamp" type="number" default="0" min="0" max="20" filter="integer" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_CLAMP_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_CLAMP_DESC" class="form-control" />
+                <field name="intro_classes" type="text" default="" hint="uk-margin-small-top" label="MOD_WMARKA_ARTICLES_GRID_FIELD_INTRO_CLASS_LABEL" class="form-control" />
+
+                <field type="spacer" name="sp_grid" label="MOD_WMARKA_ARTICLES_GRID_SP_GRID_LABEL" hr="true" />
+                <field name="grid_masonry" type="radio" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MASONRY_LABEL" default="0" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="grid_match" type="radio" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MATCH_LABEL" default="1" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="grid_gutter" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_GUTTER_LABEL" default="uk-grid-medium" class="form-select">
+                    <option value="uk-grid-collapse">MOD_WMARKA_ARTICLES_GRID_OPTION_GUTTER_COLLAPSE</option>
+                    <option value="uk-grid-small">MOD_WMARKA_ARTICLES_GRID_OPTION_GUTTER_SMALL</option>
+                    <option value="uk-grid-medium">MOD_WMARKA_ARTICLES_GRID_OPTION_GUTTER_MEDIUM</option>
+                    <option value="uk-grid-large">MOD_WMARKA_ARTICLES_GRID_OPTION_GUTTER_LARGE</option>
+                </field>
+                
+                <field name="cols_s" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_COLS_S_LABEL" default="uk-child-width-1-2@s" class="form-select">
+                    <option value="uk-child-width-1-1@s">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_1</option>
+                    <option value="uk-child-width-1-2@s">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_2</option>
+                </field>
+                <field name="cols_m" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_COLS_M_LABEL" default="uk-child-width-1-3@m" class="form-select">
+                    <option value="uk-child-width-1-1@m">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_1</option>
+                    <option value="uk-child-width-1-2@m">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_2</option>
+                    <option value="uk-child-width-1-3@m">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_3</option>
+                    <option value="uk-child-width-1-4@m">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_4</option>
+                </field>
+                <field name="cols_l" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_COLS_L_LABEL" default="uk-child-width-1-3@l" class="form-select">
+                    <option value="uk-child-width-1-2@l">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_2</option>
+                    <option value="uk-child-width-1-3@l">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_3</option>
+                    <option value="uk-child-width-1-4@l">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_4</option>
+                    <option value="uk-child-width-1-5@l">MOD_WMARKA_ARTICLES_GRID_OPTION_COLS_5</option>
+                </field>
+            </fieldset>
+
+            <fieldset name="images" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_IMAGES_LABEL">
+                <field type="spacer" name="sp_source" label="MOD_WMARKA_ARTICLES_GRID_SP_SOURCE_LABEL" hr="true" />
+                <field name="image_source" type="list" default="full" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_SOURCE_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_SOURCE_DESC" class="form-select">
+                    <option value="intro">MOD_WMARKA_ARTICLES_GRID_OPTION_SOURCE_INTRO</option>
+                    <option value="full">MOD_WMARKA_ARTICLES_GRID_OPTION_SOURCE_FULL</option>
+                </field>
+                <field name="image_fallback" type="radio" default="1" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_FALLBACK_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_FALLBACK_DESC" layout="joomla.form.field.radio.switcher">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="image_processing" type="list" default="juimage" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_PROCESSING_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_IMAGE_PROCESSING_DESC" class="form-select">
+                    <option value="juimage">MOD_WMARKA_ARTICLES_GRID_OPTION_PROCESSING_JUIMAGE</option>
+                    <option value="original">MOD_WMARKA_ARTICLES_GRID_OPTION_PROCESSING_ORIGINAL</option>
+                </field>
+                <field name="srcset" type="radio" default="1" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SRCSET_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_SRCSET_DESC" layout="joomla.form.field.radio.switcher" showon="image_processing:juimage">
+                    <option value="0">JNO</option><option value="1">JYES</option>
+                </field>
+                <field name="srcset_widths" type="text" default="400, 800, 1200" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SRCSET_WIDTHS_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_SRCSET_WIDTHS_DESC" class="form-control" showon="image_processing:juimage[AND]srcset:1" />
+                <field type="spacer" name="sp_sizes" label="MOD_WMARKA_ARTICLES_GRID_SP_SIZES_LABEL" hr="true" />
+                <field name="img_w" type="number" default="800" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMGW_LABEL" class="form-control" />
+                <field name="img_h" type="number" default="500" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMGH_LABEL" class="form-control" />
+                <field name="mob_w" type="number" default="400" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MOBW_LABEL" class="form-control" showon="image_processing:juimage" />
+                <field name="mob_h" type="number" default="300" label="MOD_WMARKA_ARTICLES_GRID_FIELD_MOBH_LABEL" class="form-control" showon="image_processing:juimage" />
+                <field name="img_q" type="number" default="70" label="MOD_WMARKA_ARTICLES_GRID_FIELD_IMGQ_LABEL" class="form-control" showon="image_processing:juimage" />
+                
+                <field type="spacer" name="sp_blend" label="MOD_WMARKA_ARTICLES_GRID_SP_BLEND_LABEL" hr="true" />
+                <field name="blend_mode" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_BLEND_LABEL" class="form-select" default="">
+                    <option value="">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_NONE</option>
+                    <option value="uk-blend-multiply">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_MULTIPLY</option>
+                    <option value="uk-blend-screen">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_SCREEN</option>
+                    <option value="uk-blend-overlay">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_OVERLAY</option>
+                    <option value="uk-blend-darken">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_DARKEN</option>
+                    <option value="uk-blend-lighten">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_LIGHTEN</option>
+                    <option value="uk-blend-color-dodge">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_COLOR_DODGE</option>
+                    <option value="uk-blend-color-burn">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_COLOR_BURN</option>
+                    <option value="uk-blend-hard-light">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_HARD_LIGHT</option>
+                    <option value="uk-blend-soft-light">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_SOFT_LIGHT</option>
+                    <option value="uk-blend-difference">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_DIFFERENCE</option>
+                    <option value="uk-blend-exclusion">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_EXCLUSION</option>
+                    <option value="uk-blend-hue">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_HUE</option>
+                    <option value="uk-blend-saturation">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_SATURATION</option>
+                    <option value="uk-blend-color">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_COLOR</option>
+                    <option value="uk-blend-luminosity">MOD_WMARKA_ARTICLES_GRID_OPTION_BLEND_LUMINOSITY</option>
+                </field>
+                <field name="overlay_color" type="color" label="MOD_WMARKA_ARTICLES_GRID_FIELD_OVERLAYCOLOR_LABEL" default="#D4AF37" showon="blend_mode!:" />
+                <field name="overlay_opacity" type="number" label="MOD_WMARKA_ARTICLES_GRID_FIELD_OVERLAYOPACITY_LABEL" default="0.5" step="0.1" min="0.1" max="1.0" class="form-control" showon="blend_mode!:" />
+            </fieldset>
+
+            <fieldset name="seo" label="MOD_WMARKA_ARTICLES_GRID_FIELDSET_SEO_LABEL">
+                <field name="structured_data" type="list" default="jsonld" label="MOD_WMARKA_ARTICLES_GRID_FIELD_STRUCTURED_DATA_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_STRUCTURED_DATA_DESC" class="form-select">
+                    <option value="jsonld">MOD_WMARKA_ARTICLES_GRID_OPTION_SD_JSONLD</option>
+                    <option value="microdata">MOD_WMARKA_ARTICLES_GRID_OPTION_SD_MICRODATA</option>
+                    <option value="none">MOD_WMARKA_ARTICLES_GRID_OPTION_SD_NONE</option>
+                </field>
+                <field name="og_images" type="list" default="auto" label="MOD_WMARKA_ARTICLES_GRID_FIELD_OG_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_OG_DESC" class="form-select">
+                    <option value="auto">MOD_WMARKA_ARTICLES_GRID_OPTION_OG_AUTO</option>
+                    <option value="always">MOD_WMARKA_ARTICLES_GRID_OPTION_OG_ALWAYS</option>
+                    <option value="off">MOD_WMARKA_ARTICLES_GRID_OPTION_OG_OFF</option>
+                </field>
+                <field name="og_count" type="number" default="1" min="1" max="10" filter="integer" label="MOD_WMARKA_ARTICLES_GRID_FIELD_OG_COUNT_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_OG_COUNT_DESC" class="form-control" showon="og_images!:off" />
+            </fieldset>
+
+            
+            <fieldset name="advanced">
+                <field name="uikit_load" type="list" default="auto" label="MOD_WMARKA_ARTICLES_GRID_FIELD_UIKIT_LOAD_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_UIKIT_LOAD_DESC" class="form-select">
+                    <option value="auto">MOD_WMARKA_ARTICLES_GRID_OPTION_UIKIT_AUTO</option>
+                    <option value="cdn">MOD_WMARKA_ARTICLES_GRID_OPTION_UIKIT_CDN</option>
+                    <option value="none">MOD_WMARKA_ARTICLES_GRID_OPTION_UIKIT_NONE</option>
+                </field>
+                <field name="uikit_cdn" type="url" default="" filter="url" hint="https://cdn.jsdelivr.net/npm/uikit@3.25.26/dist" label="MOD_WMARKA_ARTICLES_GRID_FIELD_UIKIT_CDN_LABEL" description="MOD_WMARKA_ARTICLES_GRID_FIELD_UIKIT_CDN_DESC" class="form-control" showon="uikit_load!:none" />
+                <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" class="form-select" />
+                <field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" class="form-control" />
+                <field name="owncache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL" default="1" filter="integer" validate="options" class="form-select">
+                    <option value="1">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field name="cache_time" type="number" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" default="900" filter="integer" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>
