@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelogs>
+    <changelog>
+        <element>pkg_wmarka_articles_grid</element>
+        <type>package</type>
+        <version>1.1.0</version>
+        <fix>
+            <item>Категории, метки и авторы выбираются так же, как в ядре Joomla: «чипами» из выпадающего списка с поиском. Убран двойной селект у меток.</item>
+            <item>Categories, tags and authors are picked as in the Joomla core: chips from a searchable dropdown. The doubled tag select is gone.</item>
+        </fix>
+        <addition>
+            <item>Проверка обновлений: Joomla сообщает о новой версии в панели управления и в «Расширения → Обновления» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
+            <item>Update checks: Joomla announces a new version in the control panel and in «Extensions → Update» and installs it in one click; the archive is verified by SHA-256.</item>
+            <item>Архив файлов для распаковки в корень сайта поверх установленного модуля.</item>
+            <item>An archive of files to unpack into the site root over an installed module.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_articles_grid</element>
+        <type>package</type>
+        <version>1.0.0</version>
+        <addition>
+            <item>Первый публичный выпуск.</item>
+            <item>First public release.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>mod_wmarka_articles_grid</element>
+        <type>module</type>
+        <version>1.1.0</version>
+        <fix>
+            <item>Категории, метки и авторы выбираются так же, как в ядре Joomla: «чипами» из выпадающего списка с поиском. Убран двойной селект у меток.</item>
+            <item>Categories, tags and authors are picked as in the Joomla core: chips from a searchable dropdown. The doubled tag select is gone.</item>
+        </fix>
+        <addition>
+            <item>Проверка обновлений: Joomla сообщает о новой версии в панели управления и в «Расширения → Обновления» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
+            <item>Update checks: Joomla announces a new version in the control panel and in «Extensions → Update» and installs it in one click; the archive is verified by SHA-256.</item>
+            <item>Архив файлов для распаковки в корень сайта поверх установленного модуля.</item>
+            <item>An archive of files to unpack into the site root over an installed module.</item>
+        </addition>
+    </changelog>
+    <changelog>
+        <element>mod_wmarka_articles_grid</element>
+        <type>module</type>
+        <version>1.0.0</version>
+        <addition>
+            <item>Первый публичный выпуск.</item>
+            <item>First public release.</item>
+        </addition>
+    </changelog>
+</changelogs>

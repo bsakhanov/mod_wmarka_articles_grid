@@ -1,6 +1,6 @@
 # Webmarka Articles Grid
 
-![version](https://img.shields.io/badge/version-1.0.0-1e5b54) ![Joomla](https://img.shields.io/badge/Joomla-5%20%7C%206-1e5b54) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-1e5b54) ![UIkit](https://img.shields.io/badge/UIkit-3-1e5b54) ![license](https://img.shields.io/badge/license-GPL--2.0--or--later-1e5b54)
+![version](https://img.shields.io/badge/version-1.1.0-1e5b54) ![Joomla](https://img.shields.io/badge/Joomla-5%20%7C%206-1e5b54) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-1e5b54) ![UIkit](https://img.shields.io/badge/UIkit-3-1e5b54) ![license](https://img.shields.io/badge/license-GPL--2.0--or--later-1e5b54)
 
 [Русский](#русский) · [English](#english)
 
@@ -95,8 +95,9 @@
 
 | архив | что внутри | когда брать |
 |---|---|---|
-| `pkg_wmarka_articles_grid_v1.0.0.zip` | модуль и библиотека JUImage 5.21 | обычно — его |
-| `mod_wmarka_articles_grid_v1.0.0.zip` | только модуль | JUImage уже стоит или не нужна |
+| `pkg_wmarka_articles_grid_v1.1.0.zip` | модуль и библиотека JUImage 5.21 | обычно — его |
+| `mod_wmarka_articles_grid_v1.1.0.zip` | только модуль | JUImage уже стоит или не нужна |
+| `mod_wmarka_articles_grid_v1.1.0_files.zip` | файлы модуля от корня сайта: `modules/`, `language/` | обновить файлы поверх установленного модуля распаковкой, без установщика |
 
 Архив ставится через «Система → Установка → Расширения». Затем «Содержимое → Модули сайта → Создать», выберите «Webmarka: Сетка новостей (UIkit 3)», позицию и страницы.
 
@@ -105,11 +106,25 @@
 1. проверяет версии PHP (от 8.1) и Joomla (от 5.0) и останавливает установку, если они ниже;
 2. ставит модуль;
 3. ищет на сайте `libraries/juimage/vendor/autoload.php` — файл, через который модуль подключает JUImage. Нашёл — библиотеку не трогает, какой бы версии она ни была. Не нашёл — ставит JUImage 5.21 из официального выпуска, без изменений;
-4. сообщает, откуда модуль возьмёт UIkit.
+4. сообщает, откуда модуль возьмёт UIkit;
+5. регистрирует сервер обновлений.
 
 JUImage ставится **самостоятельной библиотекой, а не частью пакета**. Пакет Joomla при удалении удаляет всё, что перечислено в его манифесте, а библиотекой могут пользоваться шаблон и другие модули — поэтому при удалении пакета исчезает только модуль, а JUImage остаётся. Удалить её можно вручную в «Расширения: управление».
 
-Обновление — тем же путём: установите новый пакет поверх прежнего, настройки модулей сохранятся.
+Обновить вручную можно тем же путём: установите новый пакет поверх прежнего, настройки модулей сохранятся.
+
+### Обновления
+
+Начиная с версии 1.1.0 модуль сам сообщает о новых версиях. При установке он регистрирует в Joomla сервер обновлений — файл `updates.xml` (для пакета) или `updates_module.xml` (для отдельного модуля) в этом репозитории. Joomla время от времени читает этот файл и, когда выходит новая версия:
+
+- показывает уведомление в панели управления и в «Расширения → Обновления»;
+- ставит обновление в один клик, скачивая архив прямо из раздела Releases;
+- сверяет скачанный архив с хешем SHA-256 из файла обновлений и не поставит подменённый файл;
+- по кнопке «Список изменений» показывает, что нового (файл `changelog.xml`).
+
+Настройки модулей при обновлении сохраняются. Если модуль ставился пакетом, обновление приходит пакету, если отдельным архивом — самому модулю; двойных уведомлений не бывает. В версии 1.0.0 сервера обновлений ещё не было: с неё один раз поставьте 1.1.0 вручную, дальше обновления придут сами.
+
+Для ручного обновления файлов есть архив `mod_wmarka_articles_grid_v1.1.0_files.zip`: распакуйте его в корень сайта поверх установленного модуля, затем в «Расширения → Управление» нажмите «Обновить кэш», чтобы Joomla показала новую версию.
 
 ### UIkit
 
@@ -165,10 +180,15 @@ CDN — сеть доставки содержимого: файлы отдаю�
 module/                 исходники модуля
 package/                манифест пакета, установочный скрипт, языковые файлы пакета
 third_party/juimage/    официальный архив JUImage 5.21 без изменений и его лицензия
-build.sh                сборка архивов в dist/
+build.sh                сборка архивов в dist/ и updates.xml
+updates.xml             сервер обновлений для пакета
+updates_module.xml      сервер обновлений для отдельного модуля
+changelog.xml           список изменений для Joomla
 ```
 
-Сборка: `./build.sh` — нужны bash и zip, а если есть php, скрипт заодно проверит синтаксис. В `dist/` появятся оба архива и файл `SHA256SUMS`.
+Сборка: `./build.sh` — нужны bash и zip, а если есть php, скрипт заодно проверит синтаксис. В `dist/` появятся три архива и файл `SHA256SUMS`, а `updates.xml` и `updates_module.xml` в корне получат новую версию, ссылки и хеши.
+
+Порядок выпуска: поднять версию в манифестах модуля и пакета, дописать `changelog.xml` и `CHANGELOG.md`, запустить `./build.sh`, создать на GitHub выпуск `vX.Y.Z` с тремя архивами и `SHA256SUMS` — и только потом отправить в `main` новые файлы обновлений. Иначе сайты узнают о версии раньше, чем её архивы появятся в Releases.
 
 ### Лицензия
 
@@ -274,8 +294,9 @@ The **Releases** section has two archives:
 
 | archive | contents | when to use |
 |---|---|---|
-| `pkg_wmarka_articles_grid_v1.0.0.zip` | the module and the JUImage 5.21 library | usually this one |
-| `mod_wmarka_articles_grid_v1.0.0.zip` | the module only | JUImage is already installed or not needed |
+| `pkg_wmarka_articles_grid_v1.1.0.zip` | the module and the JUImage 5.21 library | usually this one |
+| `mod_wmarka_articles_grid_v1.1.0.zip` | the module only | JUImage is already installed or not needed |
+| `mod_wmarka_articles_grid_v1.1.0_files.zip` | module files from the site root: `modules/`, `language/` | update the files over an installed module by unpacking, without the installer |
 
 Install it in «System → Install → Extensions». Then «Content → Site Modules → New», choose «Webmarka: Articles Grid (UIkit 3)», a position and pages.
 
@@ -284,11 +305,25 @@ What the package does on install:
 1. checks the PHP (8.1+) and Joomla (5.0+) versions and stops if they are lower;
 2. installs the module;
 3. looks for `libraries/juimage/vendor/autoload.php`, the file the module loads JUImage through. If it is there, the library is left alone, whatever its version. If not, JUImage 5.21 is installed from the official release, unchanged;
-4. tells you where the module will take UIkit from.
+4. tells you where the module will take UIkit from;
+5. registers the update server.
 
 JUImage is installed as a **standalone library, not as a child of the package**. When a Joomla package is uninstalled it removes everything listed in its manifest, and the library may be used by the template and other modules — so uninstalling the package removes only the module and JUImage stays. You can remove it by hand in «Extensions: Manage».
 
-Updating works the same way: install the new package over the old one; module settings are kept.
+A manual update works the same way: install the new package over the old one; module settings are kept.
+
+### Updates
+
+Since version 1.1.0 the module announces new versions by itself. On install it registers an update server in Joomla — the `updates.xml` file (for the package) or `updates_module.xml` (for the standalone module) in this repository. Joomla reads that file from time to time and, when a new version is out:
+
+- shows a notice in the control panel and in «Extensions → Update»;
+- installs the update in one click, downloading the archive straight from the Releases section;
+- checks the downloaded archive against the SHA-256 hash from the update file and refuses a tampered file;
+- shows what is new with the «Changelog» button (the `changelog.xml` file).
+
+Module settings are kept on update. If the module was installed as a package, the package gets the update; if as a standalone archive, the module itself does; there are never two notices. Version 1.0.0 had no update server yet: from it, install 1.1.0 by hand once, and updates will come by themselves afterwards.
+
+For a manual file update there is `mod_wmarka_articles_grid_v1.1.0_files.zip`: unpack it into the site root over the installed module, then press «Refresh Cache» in «Extensions → Manage» so Joomla shows the new version.
 
 ### UIkit
 
@@ -344,10 +379,15 @@ Repository:
 module/                 module sources
 package/                package manifest, installer script, package language files
 third_party/juimage/    the official JUImage 5.21 archive, unchanged, and its license
-build.sh                builds the archives into dist/
+build.sh                builds the archives into dist/ and updates.xml
+updates.xml             update server for the package
+updates_module.xml      update server for the standalone module
+changelog.xml           changelog for Joomla
 ```
 
-Build: `./build.sh` — needs bash and zip; if php is available the script also checks the syntax. `dist/` gets both archives and a `SHA256SUMS` file.
+Build: `./build.sh` — needs bash and zip; if php is available the script also checks the syntax. `dist/` gets three archives and a `SHA256SUMS` file, and `updates.xml` and `updates_module.xml` in the root get the new version, links and hashes.
+
+Release order: raise the version in the module and package manifests, add to `changelog.xml` and `CHANGELOG.md`, run `./build.sh`, create the GitHub release `vX.Y.Z` with the three archives and `SHA256SUMS` — and only then push the new update files to `main`. Otherwise sites learn about the version before its archives are in Releases.
 
 ### License
 

@@ -7,7 +7,7 @@
     <copyright>(C) 2026 Beibit Sakhanov</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorUrl>https://webmarka.kz</authorUrl>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description>PKG_WMARKA_ARTICLES_GRID_XML_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
 
@@ -20,4 +20,10 @@
         <language tag="en-GB">en-GB/pkg_wmarka_articles_grid.sys.ini</language>
         <language tag="ru-RU">ru-RU/pkg_wmarka_articles_grid.sys.ini</language>
     </languages>
+
+    <!-- Joomla checks this file for new versions and shows them in the admin panel -->
+    <changelogurl>https://raw.githubusercontent.com/bsakhanov/mod_wmarka_articles_grid/main/changelog.xml</changelogurl>
+    <updateservers>
+        <server type="extension" priority="1" name="pkg_wmarka_articles_grid">https://raw.githubusercontent.com/bsakhanov/mod_wmarka_articles_grid/main/updates.xml</server>
+    </updateservers>
 </extension>

@@ -6,7 +6,7 @@
     <copyright>(C) 2026 Beibit Sakhanov</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorUrl>https://webmarka.kz</authorUrl>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description>MOD_WMARKA_ARTICLES_GRID_DESC</description>
     <namespace path="src">Webmarka\Module\ArticlesGrid</namespace>
 
@@ -33,7 +33,7 @@
                 <field name="show_on_article_page" type="radio" label="MOD_WMARKA_ARTICLES_GRID_FIELD_SHOWONARTICLEPAGE_LABEL" default="1" layout="joomla.form.field.radio.switcher" showon="mode:dynamic">
                     <option value="0">JNO</option><option value="1">JYES</option>
                 </field>
-                <field name="catid" type="category" extension="com_content" multiple="true" label="JCATEGORY" class="form-select multipleCategories" showon="mode:normal" />
+                <field name="catid" type="category" extension="com_content" multiple="true" label="JCATEGORY" layout="joomla.form.field.list-fancy-select" filter="intarray" class="multipleCategories" showon="mode:normal" />
                 <field name="show_child_category_articles" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_CHILDCAT_LABEL" default="0" filter="integer">
                     <option value="0">JNO</option><option value="1">JYES</option>
                 </field>
@@ -62,14 +62,14 @@
                 <field name="show_featured" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_FEATURED_LABEL" default="show">
                     <option value="show">JSHOW</option><option value="hide">JHIDE</option><option value="only">MOD_WMARKA_ARTICLES_GRID_OPTION_ONLY</option>
                 </field>
-                <field name="filter_tag" type="tag" label="JTAG" mode="nested" multiple="true" filter="intarray" class="form-select multipleTags" />
+                <field name="filter_tag" type="tag" label="JTAG" mode="nested" multiple="true" filter="intarray" class="multipleTags" />
                 
                 <field name="author_filtering_type" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_AUTHORFILTER_LABEL" default="1" filter="integer">
                     <option value="0">MOD_WMARKA_ARTICLES_GRID_OPTION_EXCLUDE</option>
                     <option value="1">MOD_WMARKA_ARTICLES_GRID_OPTION_INCLUDE</option>
                     <option value="2">MOD_WMARKA_ARTICLES_GRID_OPTION_CURRENTUSER</option>
                 </field>
-                <field name="created_by" type="author" label="MOD_WMARKA_ARTICLES_GRID_FIELD_AUTHOR_LABEL" multiple="true" class="form-select multipleAuthors" showon="author_filtering_type!:2" />
+                <field name="created_by" type="author" label="MOD_WMARKA_ARTICLES_GRID_FIELD_AUTHOR_LABEL" multiple="true" layout="joomla.form.field.list-fancy-select" filter="intarray" class="multipleAuthors" showon="author_filtering_type!:2" />
                 
                 <field name="date_filtering" type="list" label="MOD_WMARKA_ARTICLES_GRID_FIELD_DATEFILTER_LABEL" default="off">
                     <option value="off">MOD_WMARKA_ARTICLES_GRID_OPTION_OFF</option>
