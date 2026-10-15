@@ -21,6 +21,8 @@
         <language tag="ru-RU">language/ru-RU/mod_wmarka_articles_grid.sys.ini</language>
         <language tag="en-GB">language/en-GB/mod_wmarka_articles_grid.ini</language>
         <language tag="en-GB">language/en-GB/mod_wmarka_articles_grid.sys.ini</language>
+        <language tag="kk-KZ">language/kk-KZ/mod_wmarka_articles_grid.ini</language>
+        <language tag="kk-KZ">language/kk-KZ/mod_wmarka_articles_grid.sys.ini</language>
     </languages>
 
     <config>

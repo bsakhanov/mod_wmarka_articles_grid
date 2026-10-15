@@ -11,7 +11,7 @@
         <downloads>
             <downloadurl type="full" format="zip">https://github.com/bsakhanov/mod_wmarka_articles_grid/releases/download/v1.1.0/mod_wmarka_articles_grid_v1.1.0.zip</downloadurl>
         </downloads>
-        <sha256>72380beb00fe47a183776742c1b94463f005e6ad140a0f84cd8513a9b1216226</sha256>
+        <sha256>5be9d93bae2228b0e510771da0f7775cacdbed57d88e0b095a80fd03d11c664d</sha256>
         <changelogurl>https://raw.githubusercontent.com/bsakhanov/mod_wmarka_articles_grid/main/changelog.xml</changelogurl>
         <maintainer>Beibit Sakhanov</maintainer>
         <maintainerurl>https://webmarka.kz</maintainerurl>

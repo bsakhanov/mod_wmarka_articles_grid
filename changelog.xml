@@ -9,10 +9,12 @@
             <item>Categories, tags and authors are picked as in the Joomla core: chips from a searchable dropdown. The doubled tag select is gone.</item>
         </fix>
         <addition>
-            <item>Проверка обновлений: Joomla сообщает о новой версии в панели управления и в «Расширения → Обновления» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
-            <item>Update checks: Joomla announces a new version in the control panel and in «Extensions → Update» and installs it in one click; the archive is verified by SHA-256.</item>
+            <item>Проверка обновлений: Joomla сообщает о новой версии на панели управления и в «Система → Обновление → Расширения» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
+            <item>Update checks: Joomla announces a new version in the control panel and in “System → Update → Extensions” and installs it in one click; the archive is verified by SHA-256.</item>
             <item>Архив файлов для распаковки в корень сайта поверх установленного модуля.</item>
             <item>An archive of files to unpack into the site root over an installed module.</item>
+            <item>Казахский интерфейс (kk-KZ): настройки модуля, тексты на сайте и сообщения установщика.</item>
+            <item>Kazakh interface (kk-KZ): module settings, site texts and installer messages.</item>
         </addition>
     </changelog>
     <changelog>
@@ -33,10 +35,12 @@
             <item>Categories, tags and authors are picked as in the Joomla core: chips from a searchable dropdown. The doubled tag select is gone.</item>
         </fix>
         <addition>
-            <item>Проверка обновлений: Joomla сообщает о новой версии в панели управления и в «Расширения → Обновления» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
-            <item>Update checks: Joomla announces a new version in the control panel and in «Extensions → Update» and installs it in one click; the archive is verified by SHA-256.</item>
+            <item>Проверка обновлений: Joomla сообщает о новой версии на панели управления и в «Система → Обновление → Расширения» и ставит её в один клик; целостность архива проверяется по SHA-256.</item>
+            <item>Update checks: Joomla announces a new version in the control panel and in “System → Update → Extensions” and installs it in one click; the archive is verified by SHA-256.</item>
             <item>Архив файлов для распаковки в корень сайта поверх установленного модуля.</item>
             <item>An archive of files to unpack into the site root over an installed module.</item>
+            <item>Казахский интерфейс (kk-KZ): настройки модуля, тексты на сайте и сообщения установщика.</item>
+            <item>Kazakh interface (kk-KZ): module settings, site texts and installer messages.</item>
         </addition>
     </changelog>
     <changelog>

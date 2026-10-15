@@ -19,6 +19,7 @@
     <languages folder="language">
         <language tag="en-GB">en-GB/pkg_wmarka_articles_grid.sys.ini</language>
         <language tag="ru-RU">ru-RU/pkg_wmarka_articles_grid.sys.ini</language>
+        <language tag="kk-KZ">kk-KZ/pkg_wmarka_articles_grid.sys.ini</language>
     </languages>
 
     <!-- Joomla checks this file for new versions and shows them in the admin panel -->

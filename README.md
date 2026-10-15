@@ -75,7 +75,7 @@ The grid shows Joomla articles as UIkit cards: cover image, title, intro text an
 5. **Search engines and social networks.** JSON-LD or schema.org microdata and `og:image` for link previews — with a careful Auto mode that never overrides the article's own picture.
 6. **Careful output.** Everything that comes from the options and the articles is escaped; heading tags are checked against a whitelist; with PHP error reporting at “maximum” the test page shows not a single warning.
 7. **Override piece by piece.** Each sublayout can be overridden in the site template on its own, and the helper's static methods are available to your layouts.
-8. **Two languages.** Admin interface and site texts in Russian and English; all strings live in language files.
+8. **Three languages.** Admin interface, site texts and installer messages in Kazakh, Russian and English; all strings live in language files.
 9. **Tested:** Joomla 6.1.4, PHP 8.3, UIkit 3.25.26, JUImage 5.21 — no PHP warnings, no browser console errors, no horizontal scroll on phones, tablets or desktops.
 
 ## Requirements
