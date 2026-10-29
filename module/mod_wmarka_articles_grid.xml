@@ -6,7 +6,7 @@
     <copyright>(C) 2026 Beibit Sakhanov</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorUrl>https://webmarka.kz</authorUrl>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>MOD_WMARKA_ARTICLES_GRID_DESC</description>
     <namespace path="src">Webmarka\Module\ArticlesGrid</namespace>
 

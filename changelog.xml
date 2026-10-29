@@ -3,6 +3,15 @@
     <changelog>
         <element>pkg_wmarka_articles_grid</element>
         <type>package</type>
+        <version>1.1.1</version>
+        <fix>
+            <item>Обрезка текста с многоточием больше не режет буквы. Функция rtrim() со знаками «—», «–» в списке работает с байтами и срезала второй байт таких букв, как «р» и «ғ»; разметка schema.org (JSON-LD) с битой строкой не кодировалась, и страница с модулем падала с ошибкой 500. Хвост теперь снимается по знакам (preg_replace с флагом u).</item>
+            <item>Text truncation with an ellipsis no longer cuts letters in half. rtrim() with “—” and “–” in its character list works on bytes and stripped the second byte of letters such as “р” and “ғ”; schema.org markup (JSON-LD) with the broken string failed to encode and the page with the module returned a 500 error. The tail is now trimmed by characters (preg_replace with the u flag).</item>
+        </fix>
+    </changelog>
+    <changelog>
+        <element>pkg_wmarka_articles_grid</element>
+        <type>package</type>
         <version>1.1.0</version>
         <fix>
             <item>Категории, метки и авторы выбираются так же, как в ядре Joomla: «чипами» из выпадающего списка с поиском. Убран двойной селект у меток.</item>
@@ -25,6 +34,15 @@
             <item>Первый публичный выпуск.</item>
             <item>First public release.</item>
         </addition>
+    </changelog>
+    <changelog>
+        <element>mod_wmarka_articles_grid</element>
+        <type>module</type>
+        <version>1.1.1</version>
+        <fix>
+            <item>Обрезка текста с многоточием больше не режет буквы. Функция rtrim() со знаками «—», «–» в списке работает с байтами и срезала второй байт таких букв, как «р» и «ғ»; разметка schema.org (JSON-LD) с битой строкой не кодировалась, и страница с модулем падала с ошибкой 500. Хвост теперь снимается по знакам (preg_replace с флагом u).</item>
+            <item>Text truncation with an ellipsis no longer cuts letters in half. rtrim() with “—” and “–” in its character list works on bytes and stripped the second byte of letters such as “р” and “ғ”; schema.org markup (JSON-LD) with the broken string failed to encode and the page with the module returned a 500 error. The tail is now trimmed by characters (preg_replace with the u flag).</item>
+        </fix>
     </changelog>
     <changelog>
         <element>mod_wmarka_articles_grid</element>
